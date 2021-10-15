@@ -1,15 +1,24 @@
 <template>
-  <div>
-    <div class="bg-dark-300">
+  <div class="">
+    <div class="p-8">
       <h1 class="py-0 my-0 text-4xl font-bold">Hi</h1>
-      <input type="text" v-model="name" placeholder="name" class="text-2xl" />
+      <h2 class="text-2xl font-bold">Supabase async function:</h2>
       <p>
-        {{ name }}
+        {{ response }}
+      </p>
+
+      <h2 class="text-2xl font-bold">$fetch async function</h2>
+      <p>
+        {{ responseTodo }}
       </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const name = ref("123")
+import { supabase } from "./supabase"
+
+const response = await useAsyncData("country", () => supabase.from("countries").select("*"))
+
+const responseTodo = await useAsyncData("todo", () => $fetch("https://jsonplaceholder.typicode.com/todos/1"))
 </script>
